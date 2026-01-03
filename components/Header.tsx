@@ -20,15 +20,15 @@ export default function Header() {
   return (
     <header className="sticky top-0 z-50 glass-effect">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
-          <Link href="/" className="flex items-center space-x-2">
-            <div className="w-8 h-8 bg-gradient-to-br from-green-500 to-green-600 rounded flex items-center justify-center">
-              <span className="text-white font-bold text-sm">B</span>
+        <div className="flex items-center justify-between h-20">
+          <Link href="/" className="flex items-center space-x-3 group">
+            <div className="w-10 h-10 bg-gradient-to-br from-primary to-primary-hover rounded-xl flex items-center justify-center transition-transform group-hover:scale-105">
+              <span className="text-white font-bold text-lg">B</span>
             </div>
             <span className="text-xl font-bold text-foreground">Borsa Uzmanı</span>
           </Link>
 
-          <nav className="hidden md:flex items-center space-x-8">
+          <nav className="hidden md:flex items-center gap-x-8">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
@@ -67,12 +67,12 @@ export default function Header() {
 
       {isMenuOpen && (
         <nav className="md:hidden border-t border-border">
-          <div className="px-2 pt-2 pb-3 space-y-1">
+          <div className="px-2 pt-4 pb-4 space-y-2">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
-                className={`block px-3 py-2 rounded-md text-base font-medium transition-colors ${
+                className={`block px-4 py-3 rounded-xl text-base font-medium transition-colors ${
                   pathname === link.href
                     ? 'bg-surface text-primary'
                     : 'text-secondary hover:bg-surface hover:text-foreground'
