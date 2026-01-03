@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import { useParams, useRouter } from 'next/navigation'
 import { getBlogPostById } from '@/lib/blog-data'
 import { formatDate } from '@/lib/utils'
+import { motion } from 'framer-motion'
 
 export default function BlogDetailPage() {
   const params = useParams()
@@ -19,75 +20,77 @@ export default function BlogDetailPage() {
   if (!post) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <p className="text-secondary text-xl">Yazı bulunamadı.</p>
+        <p className="text-gray-500 text-lg">Yazı bulunamadı.</p>
       </div>
     )
   }
 
   return (
     <div className="min-h-screen">
-      <article className="py-32 lg:py-40">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <button
-            onClick={() => router.back()}
-            className="flex items-center text-secondary hover:text-primary transition-colors mb-12 group"
-          >
-            <svg className="w-6 h-6 mr-3 transition-transform group-hover:-translate-x-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-            </svg>
-            Geri Dön
-          </button>
+      <article className="py-60 px-6 max-w-4xl mx-auto">
+        <motion.button
+          initial={{ opacity: 0, x: -30 }}
+          animate={{ opacity: 1, x: 0 }}
+          onClick={() => router.back()}
+          className="flex items-center text-gray-500 hover:text-white transition-colors mb-20 text-xs font-black uppercase tracking-[0.3em]"
+        >
+          ← Geri Dön
+        </motion.button>
 
-          <header className="mb-16">
-            <div className="flex flex-wrap items-center gap-5 mb-8">
-              <span className="text-base font-semibold px-6 py-3 bg-primary/10 text-primary rounded-2xl border border-primary/20">
-                {post.category}
-              </span>
-              <span className="text-base text-secondary flex items-center gap-2">
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-                {post.readTime}
-              </span>
-            </div>
-            
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-foreground mb-8 leading-tight">
-              {post.title}
-            </h1>
-            
-            <div className="flex items-center text-secondary space-x-6 text-lg">
-              <span className="font-semibold text-foreground">{post.author}</span>
-              <span className="text-border">•</span>
-              <span className="flex items-center gap-2">
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                </svg>
-                {formatDate(post.date)}
-              </span>
-            </div>
-          </header>
-
-          <div className="chart-line mb-16" />
-
-          <div className="prose prose-invert prose-lg max-w-none">
-            <div className="card-modern rounded-3xl p-12 md:p-16 shadow-2xl">
-              <div className="text-foreground space-y-8 whitespace-pre-wrap leading-relaxed text-xl">
-                {post.content}
-              </div>
-            </div>
+        <motion.header
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="mb-20"
+        >
+          <div className="flex flex-wrap items-center gap-6 mb-12">
+            <span className="text-xs font-black uppercase tracking-[0.3em] text-indigo-400">
+              {post.category}
+            </span>
+            <span className="text-xs font-black uppercase tracking-[0.3em] text-gray-600">
+              {post.readTime}
+            </span>
           </div>
+          
+          <h1 className="text-6xl md:text-8xl font-black tracking-tighter text-white mb-12 uppercase leading-none">
+            {post.title}
+          </h1>
+          
+          <div className="flex items-center text-gray-500 space-x-6 text-xs font-black uppercase tracking-[0.3em]">
+            <span className="text-white">{post.author}</span>
+            <span>•</span>
+            <span>{formatDate(post.date)}</span>
+          </div>
+        </motion.header>
 
-          <footer className="mt-24 pt-16 border-t border-border/50">
-            <div className="card-modern rounded-3xl p-12">
-              <h3 className="text-3xl font-bold text-foreground mb-6">Yazar Hakkında</h3>
-              <p className="text-secondary text-lg leading-relaxed">
-                {post.author} - Borsa ve yatırım dünyasında yılların tecrübesi ile teknik ve temel 
-                analiz üzerine uzman görüşler paylaşıyor. Finansal piyasalardaki güncel 
-                gelişmeleri ve yatırım stratejilerini takip etmenize yardımcı oluyor.
-              </p>
-            </div>
-          </footer>
-        </div>
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="bg-white/[0.02] border border-white/[0.08] rounded-[3rem] p-16 md:p-24"
+        >
+          <div className="text-gray-400 space-y-8 whitespace-pre-wrap leading-relaxed text-xl">
+            {post.content}
+          </div>
+        </motion.div>
+
+        <motion.footer
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.4 }}
+          className="mt-24"
+        >
+          <div className="bg-white/[0.02] border border-white/[0.08] rounded-[3rem] p-16">
+            <h3 className="text-4xl font-black uppercase tracking-tight text-white mb-8">
+              Yazar Hakkında
+            </h3>
+            <p className="text-gray-400 text-lg leading-relaxed">
+              {post.author} - Borsa ve yatırım dünyasında yılların tecrübesi ile teknik ve temel 
+              analiz üzerine uzman görüşler paylaşıyor. Finansal piyasalardaki güncel 
+              gelişmeleri ve yatırım stratejilerini takip etmenize yardımcı oluyor.
+            </p>
+          </div>
+        </motion.footer>
       </article>
     </div>
   )

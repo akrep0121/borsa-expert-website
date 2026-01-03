@@ -1,18 +1,12 @@
 import type { Metadata } from "next";
-import { Poppins, Inter } from "next/font/google";
+import { Inter } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import KeyboardShortcut from "@/components/KeyboardShortcut";
 
-const poppins = Poppins({
-  weight: ['400', '500', '600', '700', '800', '900'],
-  subsets: ["latin"],
-  variable: "--font-poppins",
-  display: "swap",
-});
-
 const inter = Inter({
+  weight: ['300', '400', '900'],
   subsets: ["latin"],
   variable: "--font-inter",
   display: "swap",
@@ -31,11 +25,11 @@ export default function RootLayout({
   return (
     <html lang="tr">
       <body
-        className={`${poppins.variable} ${inter.variable} antialiased min-h-screen flex flex-col`}
+        className={`${inter.variable} antialiased min-h-screen`}
       >
         <KeyboardShortcut />
         <Header />
-        <main className="flex-1">{children}</main>
+        <main className="min-h-screen">{children}</main>
         <Footer />
       </body>
     </html>

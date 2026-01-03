@@ -6,101 +6,66 @@ import { usePathname } from 'next/navigation'
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const [isScrolled, setIsScrolled] = useState(false)
   const pathname = usePathname()
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20)
-    }
-    window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
 
   useEffect(() => {
     setIsMenuOpen(false)
   }, [pathname])
 
   const navLinks = [
-    { href: '/', label: 'Ana Sayfa' },
-    { href: '/blog', label: 'Blog' },
+    { href: '/', label: 'Giriş' },
+    { href: '/blog', label: 'Yazılar' },
   ]
 
   return (
-    <header className={`sticky top-0 z-50 transition-all duration-300 ${
-      isScrolled ? 'glass shadow-xl' : 'bg-transparent'
-    }`}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-24">
-          <Link href="/" className="flex items-center space-x-4 group">
-            <div className="relative">
-              <div className="absolute inset-0 bg-gradient-to-br from-primary to-purple-500 rounded-2xl blur-lg opacity-50 group-hover:opacity-75 transition-opacity" />
-              <div className="relative w-12 h-12 bg-gradient-to-br from-primary to-purple-500 rounded-2xl flex items-center justify-center transition-transform group-hover:scale-105">
-                <span className="text-white font-bold text-xl">B</span>
-              </div>
-            </div>
-            <span className="text-2xl font-bold text-foreground">Borsa Uzmanı</span>
-          </Link>
+    <nav className="fixed top-8 left-0 right-0 z-50 flex justify-center px-6">
+      <div className="bg-white/[0.02] backdrop-blur-3xl border border-white/[0.08] px-12 py-4 rounded-full shadow-2xl flex items-center gap-16 transition-all hover:border-white/[0.12]">
+        <Link href="/" className="text-2xl font-black tracking-tighter text-white uppercase italic select-none">
+          Borsa<span className="text-indigo-500">.</span>
+        </Link>
 
-          <nav className="hidden md:flex items-center space-x-12">
-            {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className={`text-base font-medium transition-all duration-200 relative group ${
-                  pathname === link.href ? 'text-primary' : 'text-secondary'
-                }`}
-              >
-                {link.label}
-                <span className={`absolute -bottom-1 left-0 h-0.5 bg-primary transition-all duration-300 ${
-                  pathname === link.href ? 'w-full' : 'w-0 group-hover:w-full'
-                }`} />
-              </Link>
-            ))}
-          </nav>
-
-          <button
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="md:hidden p-3 rounded-2xl hover:bg-gray-800/50 transition-colors"
-            aria-label="Toggle menu"
-          >
-            <svg
-              className={`w-6 h-6 transition-transform ${isMenuOpen ? 'rotate-180' : ''}`}
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
+        <div className="hidden md:flex gap-12 text-[10px] font-black uppercase tracking-[0.3em] text-gray-500">
+          {navLinks.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              className={`hover:text-white transition ${
+                pathname === link.href ? 'text-white' : ''
+              }`}
             >
-              {isMenuOpen ? (
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              ) : (
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-              )}
-            </svg>
-          </button>
+              {link.label}
+            </Link>
+          ))}
         </div>
 
-        <div className="chart-line" />
+        <button
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
+          className="md:hidden p-2"
+          aria-label="Toggle menu"
+        >
+          <div className="w-6 h-5 flex flex-col justify-between">
+            <span className={`w-full h-0.5 bg-gray-500 transition-all ${isMenuOpen ? 'rotate-45 translate-y-2' : ''}`} />
+            <span className={`w-full h-0.5 bg-gray-500 transition-all ${isMenuOpen ? 'opacity-0' : ''}`} />
+            <span className={`w-full h-0.5 bg-gray-500 transition-all ${isMenuOpen ? '-rotate-45 -translate-y-2' : ''}`} />
+          </div>
+        </button>
       </div>
 
       {isMenuOpen && (
-        <nav className="md:hidden border-t border-border/50 glass">
-          <div className="px-4 py-8 space-y-2">
-            {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className={`block px-6 py-4 rounded-2xl text-lg font-medium transition-all ${
-                  pathname === link.href
-                    ? 'bg-primary text-black'
-                    : 'text-secondary hover:bg-gray-800/50 hover:text-foreground'
-                }`}
-              >
-                {link.label}
-              </Link>
-            ))}
-          </div>
-        </nav>
+        <div className="md:hidden fixed top-24 left-6 right-6 bg-white/[0.02] backdrop-blur-3xl border border-white/[0.08] rounded-[3rem] p-8 flex flex-col gap-4">
+          {navLinks.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              className={`text-xs font-black uppercase tracking-[0.3em] hover:text-white transition ${
+                pathname === link.href ? 'text-white' : 'text-gray-500'
+              }`}
+            >
+              {link.label}
+            </Link>
+          ))}
+        </div>
       )}
-    </header>
+    </nav>
   )
 }
