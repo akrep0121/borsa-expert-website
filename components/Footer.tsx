@@ -1,7 +1,7 @@
 export default function Footer() {
   return (
-    <footer className="border-t border-white/[0.05] bg-[#000] py-40 px-6">
-      <div className="max-w-[1600px] mx-auto flex flex-col md:flex-row justify-between items-center gap-12">
+    <footer className="py-20 px-6 border-t border-white/[0.05] bg-[#000]">
+      <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
         <div className="text-[10px] font-black tracking-[0.5em] uppercase text-gray-600 flex items-center gap-4">
           <span>Borsa Uzmanı</span>
           © 2024

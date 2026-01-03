@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import AdminLoginForm from '@/components/AdminLoginForm'
 import { getBlogPosts, addBlogPost, updateBlogPost, deleteBlogPost, BlogPost } from '@/lib/blog-data'
-import { motion } from 'framer-motion'
 
 const ADMIN_PASSWORD = 'KJSA1660'
 
@@ -130,12 +129,7 @@ export default function AdminPage() {
   return (
     <div className="min-h-screen">
       <section className="py-60 px-6 max-w-[1600px] mx-auto border-t border-white/[0.05]">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="mb-20"
-        >
+        <div className="mb-20">
           <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-8">
             <div>
               <h1 className="text-8xl md:text-[11rem] font-black tracking-tighter text-white uppercase mb-4">
@@ -164,16 +158,11 @@ export default function AdminPage() {
               </button>
             </div>
           </div>
-        </motion.div>
+        </div>
 
         {isFormOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4 }}
-            className="mb-20"
-          >
-            <div className="bg-white/[0.02] border border-white/[0.08] rounded-[3rem] p-16">
+          <div className="mb-20">
+            <div className="bg-white/[0.02] border border-white/[0.08] rounded-[2.5rem] p-16">
               <h2 className="text-4xl font-black uppercase tracking-tight text-white mb-16">
                 {editingPost ? 'Yazı Düzenle' : 'Yeni Yazı'}
               </h2>
@@ -275,69 +264,58 @@ export default function AdminPage() {
                 </div>
               </form>
             </div>
-          </motion.div>
+          </div>
         )}
 
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="space-y-8"
-        >
-          {posts.map((post, index) => (
-            <motion.div
+        <div className="space-y-8">
+          {posts.map((post) => (
+            <div
               key={post.id}
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, delay: 0.1 * index }}
-              whileHover={{ borderColor: "rgba(255,255,255,0.15)" }}
-              className="bg-white/[0.02] border border-white/[0.08] rounded-[3rem] p-12 transition-all duration-300"
+              className="bg-white/[0.02] border border-white/[0.08] rounded-[2rem] p-12 flex justify-between items-center group hover:border-indigo-500/30 transition-all duration-300"
             >
-              <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
-                <div className="flex-1">
-                  <div className="flex items-center gap-4 mb-4">
-                    <h3 className="text-2xl font-black uppercase tracking-tight text-white">
-                      {post.title}
-                    </h3>
-                    {post.featured && (
-                      <span className="text-[10px] font-black uppercase tracking-[0.3em] text-indigo-400">
-                        ÖNE ÇIKAN
-                      </span>
-                    )}
-                  </div>
-                  <p className="text-gray-400 text-base mb-4">{post.excerpt}</p>
-                  <div className="flex flex-wrap items-center gap-6 text-xs font-black uppercase tracking-[0.3em] text-gray-600">
-                    <span>{post.category}</span>
-                    <span>•</span>
-                    <span>{post.readTime}</span>
-                    <span>•</span>
-                    <span>{new Date(post.date).toLocaleDateString('tr-TR', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
-                  </div>
+              <div className="flex-1">
+                <div className="flex items-center gap-4 mb-4">
+                  <h3 className="text-2xl font-black uppercase tracking-tight text-white">
+                    {post.title}
+                  </h3>
+                  {post.featured && (
+                    <span className="text-[10px] font-black uppercase tracking-[0.3em] text-indigo-400">
+                      ÖNE ÇIKAN
+                    </span>
+                  )}
                 </div>
-                <div className="flex gap-3">
-                  <button
-                    onClick={() => handleEdit(post)}
-                    className="p-4 hover:bg-white/5 rounded-full transition-colors text-gray-500 hover:text-white border border-transparent hover:border-white/[0.1]"
-                    title="Düzenle"
-                  >
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                    </svg>
-                  </button>
-                  <button
-                    onClick={() => handleDelete(post.id)}
-                    className="p-4 hover:bg-white/5 rounded-full transition-colors text-gray-500 hover:text-indigo-400 border border-transparent hover:border-white/[0.1]"
-                    title="Sil"
-                  >
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                    </svg>
-                  </button>
+                <p className="text-gray-400 text-base mb-4">{post.excerpt}</p>
+                <div className="flex flex-wrap items-center gap-6 text-xs font-black uppercase tracking-[0.3em] text-gray-600">
+                  <span>{post.category}</span>
+                  <span>•</span>
+                  <span>{post.readTime}</span>
+                  <span>•</span>
+                  <span>{new Date(post.date).toLocaleDateString('tr-TR', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
                 </div>
               </div>
-            </motion.div>
+              <div className="flex gap-3">
+                <button
+                  onClick={() => handleEdit(post)}
+                  className="p-4 bg-white/5 text-gray-400 hover:text-white hover:bg-white/10 rounded-xl transition-all"
+                  title="Düzenle"
+                >
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h2a2 2 0 002 2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002 2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2 2z" />
+                  </svg>
+                </button>
+                <button
+                  onClick={() => handleDelete(post.id)}
+                  className="p-4 bg-white/5 text-gray-400 hover:text-indigo-400 hover:bg-white/10 rounded-xl transition-all"
+                  title="Sil"
+                >
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                  </svg>
+                </button>
+              </div>
+            </div>
           ))}
-        </motion.div>
+        </div>
       </section>
     </div>
   )

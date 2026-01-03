@@ -6,9 +6,8 @@ import Footer from "@/components/Footer";
 import KeyboardShortcut from "@/components/KeyboardShortcut";
 
 const inter = Inter({
-  weight: ['300', '400', '900'],
   subsets: ["latin"],
-  variable: "--font-inter",
+  weight: ['300', '400', '900'],
   display: "swap",
 });
 
@@ -24,9 +23,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="tr">
-      <body
-        className={`${inter.variable} antialiased min-h-screen`}
-      >
+      <head>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;900&display=swap" rel="stylesheet" />
+      </head>
+      <body className="overflow-x-hidden">
         <KeyboardShortcut />
         <Header />
         <main className="min-h-screen">{children}</main>
